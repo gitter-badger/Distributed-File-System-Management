@@ -36,19 +36,19 @@ public class GraphicalUserInterface extends JFrame {
         logInButton.setBounds(250, 270, 100, 30);
         applicationLabel.setBounds(100, 25, 250, 15);
 
-        setTitle("Distributed File System Management");
-        setBounds(200, 200, 400, 350);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
-        getContentPane().add(applicationLabel);
-        getContentPane().add(usernameLabel);
-        getContentPane().add(usernameTextField);
-        getContentPane().add(addressLabel);
-        getContentPane().add(addressTextField);
-        getContentPane().add(portLabel);
-        getContentPane().add(portTextField);
-        getContentPane().add(logInButton);
-        setVisible(true);
+        super.setTitle("Distributed File System Management");
+        super.setBounds(200, 200, 400, 350);
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.getContentPane().setLayout(null);
+        super.getContentPane().add(applicationLabel);
+        super.getContentPane().add(usernameLabel);
+        super.getContentPane().add(usernameTextField);
+        super.getContentPane().add(addressLabel);
+        super.getContentPane().add(addressTextField);
+        super.getContentPane().add(portLabel);
+        super.getContentPane().add(portTextField);
+        super.getContentPane().add(logInButton);
+        super.setVisible(true);
     }
 
     public static void main(String args[]) {

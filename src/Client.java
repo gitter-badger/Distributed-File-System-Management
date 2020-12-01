@@ -41,7 +41,7 @@ public class Client {
                 break;
             case "101":
                 JOptionPane.showMessageDialog(null, message);
-                closeSocket();
+                this.closeSocket();
                 break;
             case "300":
                 this.lastMessage = message;
@@ -60,7 +60,7 @@ public class Client {
     }
 
     public void sendMessage(String message) throws IOException {
-        parse(getMessage(message));
+        this.parse(getMessage(message));
     }
 
     public byte[] fileToByteArray(String filePath, long fileSize) throws IOException {

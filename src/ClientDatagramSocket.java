@@ -11,13 +11,13 @@ public class ClientDatagramSocket extends DatagramSocket {
 
     public void sendMessage(InetAddress receiverIP, int receiverPort, String message)
             throws IOException {
-        send(new DatagramPacket(message.getBytes(), message.getBytes().length, receiverIP,
+        super.send(new DatagramPacket(message.getBytes(), message.getBytes().length, receiverIP,
                 receiverPort));
     }
 
     public String receiveMessage() throws IOException {
         byte receiverBuffer[] = new byte[8192];
-        receive(new DatagramPacket(receiverBuffer, 8192));
+        super.receive(new DatagramPacket(receiverBuffer, 8192));
         return new String(receiverBuffer);
     }
 }

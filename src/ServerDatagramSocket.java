@@ -12,19 +12,19 @@ public class ServerDatagramSocket extends DatagramSocket {
     public void sendMessage(InetAddress receiverIP, int receiverPort, String message)
             throws IOException {
         byte buffer[] = message.getBytes();
-        send(new DatagramPacket(buffer, buffer.length, receiverIP, receiverPort));
+        super.send(new DatagramPacket(buffer, buffer.length, receiverIP, receiverPort));
     }
 
     public String receiveMessage() throws IOException {
         byte receiverBuffer[] = new byte[8192];
-        receive(new DatagramPacket(receiverBuffer, 8192));
+        super.receive(new DatagramPacket(receiverBuffer, 8192));
         return new String(receiverBuffer);
     }
 
     public DatagramInfomation receiveDatagramInfomation() throws IOException {
         byte receiverBuffer[] = new byte[8192];
         var datagram = new DatagramPacket(receiverBuffer, 8192);
-        receive(datagram);
+        super.receive(datagram);
         return new DatagramInfomation(new String(receiverBuffer), datagram.getAddress(),
                 datagram.getPort());
     }

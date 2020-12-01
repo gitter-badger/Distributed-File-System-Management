@@ -19,22 +19,22 @@ public class Server {
         message = message.substring(3).trim();
         switch (code) {
             case "000":
-                logIn(message);
+                Server.logIn(message);
                 break;
             case "001":
-                logOut(message);
+                Server.logOut(message);
                 break;
             case "200":
-                setFilename(message);
+                Server.setFilename(message);
                 break;
             case "201":
-                listFiles();
+                Server.listFiles();
                 break;
             case "202":
-                upload(message);
+                Server.upload(message);
                 break;
             case "203":
-                download(message);
+                Server.download(message);
                 break;
         }
     }
@@ -112,7 +112,7 @@ public class Server {
         Server.socket = new ServerDatagramSocket(Server.serverPort);
         for (;;) {
             DatagramInfomation request = Server.socket.receiveDatagramInfomation();
-            parse(request.getMessage());
+            Server.parse(request.getMessage());
             Server.socket.sendMessage(request.getAddress(), request.getPort(),
                     Server.returnMessage);
         }

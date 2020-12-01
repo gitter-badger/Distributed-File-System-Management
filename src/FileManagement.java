@@ -29,7 +29,7 @@ public class FileManagement extends JFrame {
             throws NumberFormatException, IOException {
         this.client = new Client(serverHost, serverPort);
         this.client.sendMessage("000 " + username);
-        updateFileList();
+        this.updateFileList();
 
         this.fileList = new JList(this.defaultList);
         this.directory = new JTextField(10);
@@ -102,17 +102,17 @@ public class FileManagement extends JFrame {
         this.fileList.setBounds(30, 70, 180, 180);
         this.directory.setBounds(220, 30, 200, 25);
 
-        setTitle("Dashboard");
-        setBounds(800, 300, 450, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
-        getContentPane().add(selectFileButton);
-        getContentPane().add(uploadButton);
-        getContentPane().add(downloadButton);
-        getContentPane().add(logOutButton);
-        getContentPane().add(this.fileList);
-        getContentPane().add(this.directory);
-        setVisible(true);
+        super.setTitle("Dashboard");
+        super.setBounds(800, 300, 450, 300);
+        super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        super.getContentPane().setLayout(null);
+        super.getContentPane().add(selectFileButton);
+        super.getContentPane().add(uploadButton);
+        super.getContentPane().add(downloadButton);
+        super.getContentPane().add(logOutButton);
+        super.getContentPane().add(this.fileList);
+        super.getContentPane().add(this.directory);
+        super.setVisible(true);
     }
 
     private void updateFileList() throws IOException {
