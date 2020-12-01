@@ -12,25 +12,20 @@ public class ServerDatagramSocket extends DatagramSocket {
     public void sendMessage(InetAddress receiverIP, int receiverPort, String message)
             throws IOException {
         byte buffer[] = message.getBytes();
-        DatagramPacket datagram =
-                new DatagramPacket(buffer, buffer.length, receiverIP, receiverPort);
-        this.send(datagram);
+        send(new DatagramPacket(buffer, buffer.length, receiverIP, receiverPort));
     }
 
     public String receiveMessage() throws IOException {
-        byte receiverBuffer[] = new byte[1024];
-        DatagramPacket datagram = new DatagramPacket(receiverBuffer, 1024);
-        this.receive(datagram);
-        String message = new String(receiverBuffer);
-        return message;
+        byte receiverBuffer[] = new byte[8192];
+        receive(new DatagramPacket(receiverBuffer, 8192));
+        return new String(receiverBuffer);
     }
 
     public DatagramInfomation receiveDatagramInfomation() throws IOException {
-        byte receiverBuffer[] = new byte[1024];
-        DatagramPacket datagram = new DatagramPacket(receiverBuffer, 1024);
-        this.receive(datagram);
-        DatagramInfomation infomation = new DatagramInfomation(new String(receiverBuffer),
-                datagram.getAddress(), datagram.getPort());
-        return infomation;
+        byte receiverBuffer[] = new byte[8192];
+        var datagram = new DatagramPacket(receiverBuffer, 8192);
+        receive(datagram);
+        return new DatagramInfomation(new String(receiverBuffer), datagram.getAddress(),
+                datagram.getPort());
     }
 }

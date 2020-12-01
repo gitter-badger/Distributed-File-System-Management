@@ -1,0 +1,77 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
+import lombok.Cleanup;
+
+public class Client {
+    private InetAddress serverHost;
+    private int serverPort;
+    private ClientDatagramSocket socket;
+    private String lastMessage = "";
+
+    public Client(String serverHost, String serverPort)
+            throws NumberFormatException, SocketException, UnknownHostException {
+        this.socket = new ClientDatagramSocket();
+        this.serverHost = InetAddress.getByName(serverHost);
+        this.serverPort = Integer.parseInt(serverPort);
+    }
+
+    public String getLastMessage() {
+        return this.lastMessage;
+    }
+
+    private void closeSocket() {
+        this.socket.close();
+    }
+
+    private String getMessage(String message) throws IOException {
+        this.socket.sendMessage(this.serverHost, this.serverPort, message);
+        return this.socket.receiveMessage();
+    }
+
+    private void parse(String message) {
+        var code = message.substring(0, 3);
+        message = message.substring(3).trim();
+        switch (code) {
+            case "100":
+                JOptionPane.showMessageDialog(null, message);
+                break;
+            case "101":
+                JOptionPane.showMessageDialog(null, message);
+                closeSocket();
+                break;
+            case "300":
+                this.lastMessage = message;
+                break;
+            case "301":
+                JOptionPane.showMessageDialog(null, message);
+                break;
+            case "302":
+                JOptionPane.showMessageDialog(null, "Your download is complete.");
+                this.lastMessage = message;
+                break;
+            case "303":
+                this.lastMessage = message;
+                break;
+        }
+    }
+
+    public void sendMessage(String message) throws IOException {
+        parse(getMessage(message));
+    }
+
+    public byte[] fileToByteArray(String filePath, long fileSize) throws IOException {
+        byte byteArray[] = new byte[(int) fileSize];
+        @Cleanup
+        var fin = new FileInputStream(filePath);
+        var i = 0;
+        while (fin.available() != 0) {
+            byteArray[i] = (byte) fin.read();
+            ++i;
+        }
+        return byteArray;
+    }
+}
