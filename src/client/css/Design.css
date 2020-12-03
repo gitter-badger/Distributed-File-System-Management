@@ -1,0 +1,4 @@
+.logInButton {
+    -fx-shape: "M 200 450 A 50 50 0 1 1 200 300 Q 300 300 400 300 A 50 50 0 1 1 400 450 Q 300 450 200 450 ";
+    -fx-background-color: linear-gradient(to right, cyan, rgb(255, 5, 213));
+}
