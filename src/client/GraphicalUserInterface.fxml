@@ -24,12 +24,12 @@
       </Button>
       <ImageView fitHeight="30.0" fitWidth="32.0" layoutX="428.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="4.0">
          <image>
-            <Image url="@img/cancel.png" />
+            <Image url="@img/Close.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="392.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="4.0">
          <image>
-            <Image url="@img/minus.png" />
+            <Image url="@img/Minimize.png" />
          </image>
       </ImageView>
       <Line endX="150.0" layoutX="231.0" layoutY="190.0" startX="-150.0">
@@ -67,7 +67,7 @@
       <TextField layoutX="81.0" layoutY="225.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" />
       <ImageView fitHeight="92.0" fitWidth="112.0" layoutX="186.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="186.0" AnchorPane.topAnchor="34.0">
          <image>
-            <Image url="@img/product.png" />
+            <Image url="@img/Symbol.png" />
          </image>
       </ImageView>
    </children>

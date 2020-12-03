@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="719.0" prefWidth="1071.0" style="-fx-background-color: #00001a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="73.0" fitWidth="88.0" layoutX="378.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/upload%20(2).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="73.0" fitWidth="73.0" layoutX="647.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/download%20(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="124.0" fitWidth="181.0" layoutX="254.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/folder%20(4).png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="401.0" layoutY="276.0" prefHeight="41.0" prefWidth="423.0" promptText="File Address" />
+      <Text fx:id="selectsingleflie" layoutX="265.0" layoutY="291.0" onMouseClicked="#selectSingleFile" strokeType="OUTSIDE" strokeWidth="0.0" text="Select" textAlignment="CENTER" wrappingWidth="102.0224609375">
+         <font>
+            <Font size="38.0" />
+         </font>
+         <fill>
+            <LinearGradient endX="0.7571428571428571" endY="0.3190476190476192" startY="0.9190476190476191">
+               <stops>
+                  <Stop color="#f6f8f8ab" />
+                  <Stop color="#87a4e1" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+      <Text layoutX="212.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INTRANET FILE DISTRIBUTION SYSTEM">
+         <font>
+            <Font size="40.0" />
+         </font>
+         <fill>
+            <LinearGradient endX="0.7571428571428571" endY="0.3809523809523811" startY="1.0">
+               <stops>
+                  <Stop color="#cbd02b" />
+                  <Stop color="#ff963b" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+      <ImageView fitHeight="124.0" fitWidth="135.0" layoutX="70.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/logistics.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="66.0" fitWidth="73.0" layoutX="875.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/power-button%20(1).png" />
+         </image>
+      </ImageView>
+      <Text fill="#e49898d6" layoutX="876.0" layoutY="670.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="LOG OUT">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#acbedd" fontSmoothingType="LCD" layoutX="388.0" layoutY="553.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="UPLOAD">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#acbedd" fontSmoothingType="LCD" layoutX="644.0" layoutY="552.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="DOWNLOAD">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
