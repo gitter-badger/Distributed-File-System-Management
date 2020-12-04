@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="464.0" style="-fx-background-color: #222222;" stylesheets="@css/Design.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.client.Controller">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="464.0" style="-fx-background-color: #222222;" stylesheets="@css/Design.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
    <children>
       <Button layoutX="176.0" layoutY="384.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="112.0" stylesheets="@css/Design.css" text="LOG IN" textAlignment="CENTER" textFill="#f2e6e6">
          <font>
