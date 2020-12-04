@@ -7,14 +7,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class Test extends Application {
+
+public class Test2 extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GraphicalUserInterface.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FileManagement.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
+
     }
 
     public static void main(String[] args) {

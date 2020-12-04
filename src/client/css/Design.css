@@ -1,5 +1,11 @@
 .logInButton {
-    -fx-shape: "M 200 450 A 50 50 0 1 1 200 300 Q 300 300 400 300 A 50 50 0 1 1 400 450 Q 300 450 200 450 ";
     -fx-background-color: linear-gradient(to right, cyan, rgb(255, 5, 213));
+    -fx-shape: "M 200 450 A 50 50 0 1 1 200 300 Q 300 300 400 300 A 50 50 0 1 1 400 450 Q 300 450 200 450 ";
     background-color: linear-gradient(to right, cyan, rgb(255, 5, 213));
+}
+.findTextField {
+    -fx-background-color: rgba(15, 15, 15, 0.76);
+    -fx-shape: "M 50 450 Q 0 450 0 400 L 0 350 Q 0 300 50 300 L 500 300 L 800 300 L 800 450 Z";
+    -fx-text-fill: rgb(209, 207, 207);
+    background-color: rgba(15, 15, 15, 0.76);
 }

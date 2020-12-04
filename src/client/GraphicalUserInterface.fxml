@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="464.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@css/Design.css">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="464.0" style="-fx-background-color: #222222;" stylesheets="@css/Design.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.client.Controller">
    <children>
       <Button layoutX="176.0" layoutY="384.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="112.0" stylesheets="@css/Design.css" text="LOG IN" textAlignment="CENTER" textFill="#f2e6e6">
          <font>
@@ -22,12 +22,12 @@
             <String fx:value="logInButton" />
          </styleClass>
       </Button>
-      <ImageView fitHeight="30.0" fitWidth="32.0" layoutX="428.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="4.0">
+      <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="30.0" layoutX="428.0" layoutY="4.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="4.0">
          <image>
             <Image url="@img/Close.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="392.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="4.0">
+      <ImageView fx:id="minimizeButton" fitHeight="30.0" fitWidth="30.0" layoutX="392.0" layoutY="4.0" onMouseClicked="#minimizeWindow" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="4.0">
          <image>
             <Image url="@img/Minimize.png" />
          </image>
@@ -62,10 +62,19 @@
             </LinearGradient>
          </stroke>
       </Line>
-      <TextField layoutX="81.0" layoutY="150.0" prefHeight="30.0" prefWidth="301.0" promptText="Username" style="-fx-background-color: #222222;" />
-      <TextField layoutX="81.0" layoutY="300.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Address" style="-fx-background-color: #222222;" />
-      <TextField layoutX="81.0" layoutY="225.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" />
-      <ImageView fitHeight="92.0" fitWidth="112.0" layoutX="186.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="186.0" AnchorPane.topAnchor="34.0">
+      <TextField layoutX="81.0" layoutY="154.0" prefHeight="30.0" prefWidth="301.0" promptText="Username" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <TextField layoutX="81.0" layoutY="304.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Address" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <TextField layoutX="81.0" layoutY="229.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <ImageView fitHeight="95.0" fitWidth="105.0" layoutX="193.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="41.0">
          <image>
             <Image url="@img/Symbol.png" />
          </image>
