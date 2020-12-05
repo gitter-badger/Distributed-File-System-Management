@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
 public class Test2 extends Application {
 
     @Override
@@ -17,7 +16,6 @@ public class Test2 extends Application {
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-
     }
 
     public static void main(String[] args) {

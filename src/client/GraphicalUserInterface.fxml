@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,14 +12,10 @@
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="464.0" style="-fx-background-color: #222222;" stylesheets="@css/Design.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
    <children>
-      <Button layoutX="176.0" layoutY="384.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="112.0" stylesheets="@css/Design.css" text="LOG IN" textAlignment="CENTER" textFill="#f2e6e6">
+      <Button fx:id="logInButton" layoutX="176.0" layoutY="384.0" mnemonicParsing="false" onAction="#logIn" prefHeight="40.0" prefWidth="112.0" styleClass="logInButton" stylesheets="@css/Design.css" text="LOG IN" textAlignment="CENTER" textFill="#f2e6e6">
          <font>
             <Font name="Segoe UI Semibold" size="12.0" />
          </font>
-         <styleClass>
-            <String fx:value="logInButton" />
-            <String fx:value="logInButton" />
-         </styleClass>
       </Button>
       <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="30.0" layoutX="428.0" layoutY="4.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="4.0">
          <image>
@@ -62,15 +57,15 @@
             </LinearGradient>
          </stroke>
       </Line>
-      <TextField layoutX="81.0" layoutY="154.0" prefHeight="30.0" prefWidth="301.0" promptText="Username" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css">
+      <TextField fx:id="usernameTextField" layoutX="81.0" layoutY="154.0" prefHeight="30.0" prefWidth="301.0" promptText="Username" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css" text="Admin">
          <font>
             <Font size="13.0" />
          </font></TextField>
-      <TextField layoutX="81.0" layoutY="304.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Address" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css">
+      <TextField fx:id="serverAddressTextField" layoutX="81.0" layoutY="304.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Address" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css" text="localhost">
          <font>
             <Font size="13.0" />
          </font></TextField>
-      <TextField layoutX="81.0" layoutY="229.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css">
+      <TextField fx:id="serverPortTextField" layoutX="81.0" layoutY="229.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" styleClass="findTextField" stylesheets="@css/Design.css" text="3">
          <font>
             <Font size="13.0" />
          </font></TextField>

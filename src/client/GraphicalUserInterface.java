@@ -1,63 +1,24 @@
 package client;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javafx.fxml.FXMLLoader;
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-public class GraphicalUserInterface extends JFrame {
-    private static final long serialVersionUID = 1L;
+public class GraphicalUserInterface extends Application {
 
-    public GraphicalUserInterface() {
-        super();
-
-        var applicationLabel = new JLabel("Distributed File System Management");
-        var usernameLabel = new JLabel("Username: ");
-        var usernameTextField = new JTextField("Admin", 10);
-        var addressLabel = new JLabel("Server Address: ");
-        var addressTextField = new JTextField("localhost", 10);
-        var portLabel = new JLabel("Server Port: ");
-        var portTextField = new JTextField("3", 10);
-        var logInButton = new JButton("Log In");
-        logInButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                FileManagement.main(usernameTextField.getText(), addressTextField.getText(),
-                        portTextField.getText());
-            }
-        });
-
-        usernameLabel.setBounds(30, 80, 100, 25);
-        usernameTextField.setBounds(150, 80, 200, 20);
-        addressLabel.setBounds(30, 150, 100, 25);
-        addressTextField.setBounds(150, 150, 200, 20);
-        portLabel.setBounds(30, 220, 100, 25);
-        portTextField.setBounds(150, 220, 200, 20);
-        logInButton.setBounds(250, 270, 100, 30);
-        applicationLabel.setBounds(100, 25, 250, 15);
-
-        super.setTitle("Distributed File System Management");
-        super.setBounds(200, 200, 400, 350);
-        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.getContentPane().setLayout(null);
-        super.getContentPane().add(applicationLabel);
-        super.getContentPane().add(usernameLabel);
-        super.getContentPane().add(usernameTextField);
-        super.getContentPane().add(addressLabel);
-        super.getContentPane().add(addressTextField);
-        super.getContentPane().add(portLabel);
-        super.getContentPane().add(portTextField);
-        super.getContentPane().add(logInButton);
-        super.setVisible(true);
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("GraphicalUserInterface.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.show();
     }
 
-    public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GraphicalUserInterface();
-            }
-        });
+    public static void main(String[] args) {
+        Application.launch(args);
     }
 }
