@@ -1,30 +1,33 @@
 package client;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import lombok.Cleanup;
 
 @SuppressWarnings("rawtypes")
-public class FileManagement extends JFrame {
+public class FileManagement {
     private static final long serialVersionUID = 1L;
     private File fileToUpload;
     private DefaultListModel<String> defaultList = new DefaultListModel<String>();
-    private JTextField directory;
-    private JList fileList;
+    private TextField directory;
+    private ListView fileList;
     private Client client;
+    public AnchorPane pane;
 
     @SuppressWarnings("unchecked")
     public FileManagement(String username, String serverHost, String serverPort)
@@ -33,88 +36,67 @@ public class FileManagement extends JFrame {
         this.client.sendMessage("000 " + username);
         this.updateFileList();
 
-        this.fileList = new JList(this.defaultList);
-        this.directory = new JTextField(10);
-        var selectFileButton = new JButton("Select File");
-        selectFileButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                var chooser = new JFileChooser();
-                var returnValue = chooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    fileToUpload = chooser.getSelectedFile();
-                    directory.setText(fileToUpload.getAbsolutePath());
-                }
+        ImageView selectFileButton = new ImageView();
+        selectFileButton.setOnMouseClicked(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open");
+            Stage stage = (Stage) pane.getScene().getWindow();
+            File fileToUpload = fileChooser.showOpenDialog(stage);
+            if (fileToUpload != null) {
+                directory.setText(fileToUpload.getAbsolutePath());
+            } else {
+                directory.setText("Choose File");
+            }
+
+        });
+
+        ImageView uploadButton = new ImageView();
+        uploadButton.setOnMouseClicked(event -> {
+            try {
+                byte fileInBytes[];
+                fileInBytes = client.fileToByteArray(fileToUpload.getAbsolutePath(),
+                        fileToUpload.length());
+                var fileContents = new String(fileInBytes);
+                client.sendMessage("200 " + fileToUpload.getName());
+                client.sendMessage("202 " + fileContents);
+                updateFileList();
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         });
-        var uploadButton = new JButton("Upload");
-        uploadButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                try {
-                    byte fileInBytes[];
-                    fileInBytes = client.fileToByteArray(fileToUpload.getAbsolutePath(),
-                            fileToUpload.length());
-                    var fileContents = new String(fileInBytes);
-                    client.sendMessage("200 " + fileToUpload.getName());
-                    client.sendMessage("202 " + fileContents);
-                    updateFileList();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        });
-        var downloadButton = new JButton("Download");
-        downloadButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                try {
-                    var selectedFile = fileList.getSelectedValue().toString();
-                    client.sendMessage("203 " + selectedFile);
-                    var message = client.getLastMessage();
-                    if (!message.equals("File does not exist!")) {
-                        byte[] fileInBytes = client.getLastMessage().getBytes();
-                        Files.createDirectories(Paths.get("C:\\Network\\Downloads\\"));
-                        var newFile = new File("C:\\Network\\Downloads\\" + selectedFile);
-                        newFile.createNewFile();
-                        @Cleanup
-                        var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
-                        fout.write(fileInBytes);
-                    } else
-                        JOptionPane.showMessageDialog(null, message);
-                    updateFileList();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        });
-        var logOutButton = new JButton("Log Out");
-        logOutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                try {
-                    client.sendMessage("001 " + username);
-                    dispose();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
+        Alert alert = new Alert(AlertType.INFORMATION);
+        ImageView downloadButton = new ImageView();
+        downloadButton.setOnMouseClicked(event -> {
+            try {
+                var selectedFile = fileList.getSelectionModel().getSelectedItem().toString();
+                client.sendMessage("203 " + selectedFile);
+                var message = client.getLastMessage();
+                if (!message.equals("File does not exist!")) {
+                    byte[] fileInBytes = client.getLastMessage().getBytes();
+                    Files.createDirectories(Paths.get("C:\\Network\\Downloads\\"));
+                    var newFile = new File("C:\\Network\\Downloads\\" + selectedFile);
+                    newFile.createNewFile();
+                    @Cleanup
+                    var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
+                    fout.write(fileInBytes);
+                } else
+                    alert.setContentText(message);
+                alert.showAndWait();
+                updateFileList();
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         });
 
-        selectFileButton.setBounds(60, 30, 120, 25);
-        uploadButton.setBounds(260, 90, 120, 25);
-        downloadButton.setBounds(260, 140, 120, 25);
-        logOutButton.setBounds(260, 190, 120, 25);
-        this.fileList.setBounds(30, 70, 180, 180);
-        this.directory.setBounds(220, 30, 200, 25);
+        ImageView logOutButton = new ImageView();
+        logOutButton.setOnMouseClicked(event -> {
+            try {
+                client.sendMessage("001 " + username);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        });
 
-        super.setTitle("Dashboard");
-        super.setBounds(800, 300, 450, 300);
-        super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        super.getContentPane().setLayout(null);
-        super.getContentPane().add(selectFileButton);
-        super.getContentPane().add(uploadButton);
-        super.getContentPane().add(downloadButton);
-        super.getContentPane().add(logOutButton);
-        super.getContentPane().add(this.fileList);
-        super.getContentPane().add(this.directory);
-        super.setVisible(true);
     }
 
     private void updateFileList() throws IOException {
