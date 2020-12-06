@@ -15,8 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import lombok.Cleanup;
 
 @SuppressWarnings("rawtypes")
