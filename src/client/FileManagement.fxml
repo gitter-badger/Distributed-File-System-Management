@@ -12,18 +12,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane" focusTraversable="true" prefHeight="796.0" prefWidth="770.0" style="-fx-background-color: #1a1a1a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GraphicalUserInterface">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="610.0" style="-fx-background-color: #1a1a1a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GraphicalUserInterface">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343536" height="60.0" layoutY="104.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1071.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="104.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#05050545" height="41.0" layoutX="622.0" layoutY="114.0" stroke="TRANSPARENT" strokeType="INSIDE" width="44.0" AnchorPane.topAnchor="114.0" />
-      <TextField fx:id="directory" layoutX="311.0" layoutY="114.0" prefHeight="41.0" prefWidth="309.0" promptText="File Address" style="-fx-alignment: #123456;" styleClass="textField" stylesheets="@css/Design.css" AnchorPane.topAnchor="114.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343536" height="60.0" layoutX="-7.0" layoutY="115.0" stroke="TRANSPARENT" strokeType="INSIDE" width="619.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#05050545" height="41.0" layoutX="352.0" layoutY="125.0" stroke="TRANSPARENT" strokeType="INSIDE" width="44.0" />
+      <TextField fx:id="directory" layoutX="41.0" layoutY="125.0" prefHeight="41.0" prefWidth="309.0" promptText="File Address" style="-fx-alignment: #123456;" styleClass="textField" stylesheets="@css/Design.css">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <Text layoutX="118.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DISTRIBUTED FILE SYSTEM MANAGEMENT" wrappingWidth="478.09375">
+      <Text layoutX="75.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DISTRIBUTED FILE SYSTEM MANAGEMENT" wrappingWidth="478.09375">
          <font>
-            <Font size="25.0" />
+            <Font size="22.0" />
          </font>
          <fill>
             <LinearGradient endX="0.7571428571428571" endY="0.3809523809523811" startY="1.0">
@@ -34,49 +35,54 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Text fill="#e49898d6" layoutX="919.0" layoutY="139.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="LOG OUT" textAlignment="CENTER" wrappingWidth="61.85595703125" AnchorPane.rightAnchor="90.14404296875" AnchorPane.topAnchor="124.9716796875">
+      <Text fill="#e49898d6" layoutX="536.0" layoutY="168.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="LOG OUT" textAlignment="CENTER" wrappingWidth="53.4501953125">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="SansSerif Bold" size="10.0" />
          </font>
       </Text>
-      <Text fill="#acbedd" fontSmoothingType="LCD" layoutX="53.0" layoutY="140.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="UPLOAD" AnchorPane.topAnchor="124.892578125">
+      <Text fx:id="uploadButton" fill="#acbedd" layoutX="410.0" layoutY="152.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="UPLOAD" wrappingWidth="86.4501953125">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#acbedd" fontSmoothingType="LCD" layoutX="496.0" layoutY="618.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="DOWNLOAD">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fill="#acbedd" fontSmoothingType="LCD" layoutX="169.0" layoutY="140.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="DOWNLOAD" AnchorPane.topAnchor="124.892578125">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="73.0" fitWidth="53.0" layoutX="53.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="73.0" fitWidth="53.0" layoutX="14.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Circle.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="47.0" fitWidth="44.0" layoutX="991.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="112.0">
+      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="545.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Power.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="30.0" layoutX="1038.0" layoutY="2.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="2.0">
+      <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="30.0" layoutX="577.0" layoutY="3.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Close.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="minimizeButton" fitHeight="30.0" fitWidth="30.0" layoutX="1005.0" layoutY="2.0" onMouseClicked="#minimizeWindow" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="2.0">
+      <ImageView fx:id="minimizeButton" fitHeight="30.0" fitWidth="30.0" layoutX="544.0" layoutY="3.0" onMouseClicked="#minimizeWindow" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Minimize.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="625.0" layoutY="115.0" onMouseClicked="#minimizeWindow" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="355.0" layoutY="126.0" onMouseClicked="#minimizeWindow" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Loupe.png" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="scroll" layoutY="195.0" prefHeight="604.0" prefWidth="1071.0" style="-fx-background-color: transparent;" stylesheets="@css/Design.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ImageView fx:id="downloadButton" fitHeight="60.0" fitWidth="53.0" layoutX="510.0" layoutY="542.0" onMouseClicked="#minimizeWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/Download.png" />
+         </image>
+      </ImageView>
+      <ScrollPane layoutX="14.0" layoutY="186.0" prefHeight="474.0" prefWidth="445.0" style="-fx-background-color: #1a1a1a;" stylesheets="@css/Design.css">
          <content>
-            <ListView prefHeight="604.0" prefWidth="1069.0" style="-fx-background-color: transparent;" />
+            <ListView prefHeight="474.0" prefWidth="448.0" style="-fx-background-color: #1a1a1a;" />
          </content>
       </ScrollPane>
    </children>
