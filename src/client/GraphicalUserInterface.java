@@ -2,6 +2,7 @@ package client;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class GraphicalUserInterface extends Application {
+    public static String username, serverPort, serverAddress;
     @FXML
     private AnchorPane pane;
     @FXML
@@ -21,9 +23,10 @@ public class GraphicalUserInterface extends Application {
     @FXML
     private TextField usernameTextField;
     @FXML
-    private TextField serverAddressTextField;
-    @FXML
     private TextField serverPortTextField;
+    @FXML
+    private TextField serverAddressTextField;
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -40,17 +43,27 @@ public class GraphicalUserInterface extends Application {
 
     @FXML
     private void minimizeWindow(MouseEvent event) {
-        Stage stage = (Stage) pane.getScene().getWindow();
-        stage.setIconified(true);
+        ((Stage) pane.getScene().getWindow()).setIconified(true);
     }
 
     @FXML
     private void logIn(ActionEvent event) {
-        FileManagement.main(usernameTextField.getText(), serverAddressTextField.getText(),
-                serverPortTextField.getText());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    GraphicalUserInterface.username = usernameTextField.getText();
+                    GraphicalUserInterface.serverPort = serverPortTextField.getText();
+                    GraphicalUserInterface.serverAddress = serverAddressTextField.getText();
+                    new FileManagement().start(new Stage());
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String args[]) {
-        Application.launch(args);
+        Application.launch(GraphicalUserInterface.class, args);
     }
 }

@@ -27,6 +27,11 @@
             <Image url="@img/Minimize.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="95.0" fitWidth="105.0" layoutX="193.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="41.0">
+         <image>
+            <Image url="@img/Symbol.png" />
+         </image>
+      </ImageView>
       <Line endX="150.0" layoutX="231.0" layoutY="190.0" startX="-150.0">
          <stroke>
             <LinearGradient endX="1.0" endY="1.0" startY="1.0">
@@ -61,18 +66,13 @@
          <font>
             <Font size="13.0" />
          </font></TextField>
-      <TextField fx:id="serverAddressTextField" layoutX="81.0" layoutY="304.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Address" style="-fx-background-color: #222222;" styleClass="textField" stylesheets="@css/Design.css" text="localhost">
-         <font>
-            <Font size="13.0" />
-         </font></TextField>
       <TextField fx:id="serverPortTextField" layoutX="81.0" layoutY="229.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" styleClass="textField" stylesheets="@css/Design.css" text="3">
          <font>
             <Font size="13.0" />
          </font></TextField>
-      <ImageView fitHeight="95.0" fitWidth="105.0" layoutX="193.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="41.0">
-         <image>
-            <Image url="@img/Symbol.png" />
-         </image>
-      </ImageView>
+      <TextField fx:id="serverAddressTextField" layoutX="81.0" layoutY="304.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Address" style="-fx-background-color: #222222;" styleClass="textField" stylesheets="@css/Design.css" text="localhost">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
    </children>
 </AnchorPane>

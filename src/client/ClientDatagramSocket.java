@@ -11,10 +11,10 @@ public class ClientDatagramSocket extends DatagramSocket {
         super();
     }
 
-    public void sendMessage(InetAddress receiverIP, int receiverPort, String message)
+    public void sendMessage(InetAddress receiverAddress, int receiverPort, String message)
             throws IOException {
-        super.send(new DatagramPacket(message.getBytes(), message.getBytes().length, receiverIP,
-                receiverPort));
+        super.send(new DatagramPacket(message.getBytes(), message.getBytes().length,
+                receiverAddress, receiverPort));
     }
 
     public String receiveMessage() throws IOException {

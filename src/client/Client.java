@@ -9,15 +9,15 @@ import javax.swing.JOptionPane;
 import lombok.Cleanup;
 
 public class Client {
-    private InetAddress serverHost;
+    private InetAddress serverAddress;
     private int serverPort;
     private ClientDatagramSocket socket;
     private String lastMessage = "";
 
-    public Client(String serverHost, String serverPort)
+    public Client(String serverAddress, String serverPort)
             throws NumberFormatException, SocketException, UnknownHostException {
         this.socket = new ClientDatagramSocket();
-        this.serverHost = InetAddress.getByName(serverHost);
+        this.serverAddress = InetAddress.getByName(serverAddress);
         this.serverPort = Integer.parseInt(serverPort);
     }
 
@@ -30,7 +30,7 @@ public class Client {
     }
 
     private String getMessage(String message) throws IOException {
-        this.socket.sendMessage(this.serverHost, this.serverPort, message);
+        this.socket.sendMessage(this.serverAddress, this.serverPort, message);
         return this.socket.receiveMessage();
     }
 
