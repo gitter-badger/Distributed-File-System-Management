@@ -1,7 +1,9 @@
 package server;
 
 import java.net.InetAddress;
+import lombok.Getter;
 
+@Getter
 public class DatagramInfomation {
     private String message;
     private InetAddress address;
@@ -11,17 +13,5 @@ public class DatagramInfomation {
         this.message = message;
         this.address = address;
         this.port = port;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public InetAddress getAddress() {
-        return this.address;
-    }
-
-    public int getPort() {
-        return this.port;
     }
 }

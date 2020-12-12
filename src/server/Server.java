@@ -7,11 +7,15 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import lombok.Cleanup;
+import lombok.Setter;
 
 public class Server {
     private static final int serverPort = 3;
     private static ServerDatagramSocket socket;
-    private static String returnMessage, username, filename;
+    private static String returnMessage, username;
+
+    @Setter
+    private static String filename;
 
     public Server() {
     }
@@ -38,6 +42,9 @@ public class Server {
             case "203":
                 Server.download(message);
                 break;
+            case "204":
+                Server.delete(message);
+                break;
         }
     }
 
@@ -53,10 +60,6 @@ public class Server {
     private static void logOut(String mesage) {
         Server.returnMessage = "101 Good bye, " + mesage + '!';
         Server.username = null;
-    }
-
-    private static void setFilename(String message) {
-        Server.filename = message;
     }
 
     private static void listFiles() throws IOException {
@@ -78,6 +81,7 @@ public class Server {
         byte[] fileInBytes = message.getBytes();
         var f = new File("C:\\Network\\" + Server.username + "\\" + Server.filename);
         f.createNewFile();
+
         @Cleanup
         var fout = new FileOutputStream("C:\\Network\\" + Server.username + "\\" + Server.filename);
         fout.write(fileInBytes);
@@ -86,6 +90,7 @@ public class Server {
 
     private static byte[] fileToByteArray(String filePath, long fileSize) throws IOException {
         byte byteArray[] = new byte[(int) fileSize];
+
         @Cleanup
         var fin = new FileInputStream(filePath);
         var i = 0;
@@ -101,6 +106,18 @@ public class Server {
         if (f.isFile()) {
             byte[] fileInBytes = fileToByteArray(f.getAbsolutePath(), f.length());
             Server.returnMessage = "302 " + new String(fileInBytes);
+        } else
+            Server.returnMessage = "303 File does not exist!";
+    }
+
+    private static void delete(String message) throws IOException {
+        var f = new File("C:\\Network\\" + Server.username + "\\" + message);
+        if (f.isFile()) {
+            if (f.delete())
+                Server.returnMessage = "304 File is deleted!";
+            else
+                Server.returnMessage = "305 Cannot delete file!";
+
         } else
             Server.returnMessage = "303 File does not exist!";
     }
