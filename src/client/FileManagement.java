@@ -8,9 +8,6 @@ import java.nio.file.Paths;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.Cleanup;
 
-public class FileManagement extends Application {
+public class FileManagement {
     private Client client;
     private DefaultListModel<String> defaultList = new DefaultListModel<String>();
     private File fileToUpload;
@@ -41,15 +38,20 @@ public class FileManagement extends Application {
     @FXML
     private TextField directory;
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        this.client = new Client(FileManagement.serverAddress, FileManagement.serverPort);
-        this.client.sendMessage("000 " + FileManagement.username);
-        this.updateFileList();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("FileManagement.fxml"))));
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.show();
+
+
+    public static String getUsername() {
+        return username;
     }
+
+    public static String getServerPort() {
+        return serverPort;
+    }
+
+    public static String getServerAddress() {
+        return serverAddress;
+    }
+
 
     @FXML
     private void closeWindow(MouseEvent event) {
@@ -62,7 +64,7 @@ public class FileManagement extends Application {
         ((Stage) pane.getScene().getWindow()).setIconified(true);
     }
 
-    private void updateFileList() throws IOException {
+    public void updateFileList() throws IOException {
         this.client.sendMessage("201 ");
         this.defaultList.clear();
         String[] files = this.client.getLastMessage().split(";");

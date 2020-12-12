@@ -2,7 +2,6 @@ package client;
 
 import java.io.IOException;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +16,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class GraphicalUserInterface extends Application {
+
+    protected Client client;
+    private FileManagement controller;
+
     public static String username, serverPort, serverAddress;
     @FXML
     private AnchorPane pane;
@@ -30,7 +33,6 @@ public class GraphicalUserInterface extends Application {
     private TextField serverAddressTextField;
     @FXML
     private ImageView closeButton;
-
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -52,28 +54,31 @@ public class GraphicalUserInterface extends Application {
     }
 
     @FXML
-    private void logIn(ActionEvent event) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    GraphicalUserInterface.username = usernameTextField.getText();
-                    GraphicalUserInterface.serverPort = serverPortTextField.getText();
-                    GraphicalUserInterface.serverAddress = serverAddressTextField.getText();
-                    FXMLLoader loader =
-                            new FXMLLoader(getClass().getResource("FileManagement.fxml"));
-                    Parent root = loader.load();
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.show();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        });
+    private void logIn(ActionEvent event) throws IOException {
+        try {
+            this.client =
+                    new Client(serverAddressTextField.getText(), serverPortTextField.getText());
+            this.client.sendMessage("000 " + usernameTextField.getText());
+            // controller = new FileManagement(client);
+            // controller.updateFileList();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FileManagement.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+    }
+
+
+    public Client getClient() {
+        return client;
     }
 
     public static void main(String args[]) {
