@@ -13,9 +13,13 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.Cleanup;
@@ -30,6 +34,12 @@ public class FileManagement extends Application {
             serverAddress = GraphicalUserInterface.serverAddress;
     @FXML
     private AnchorPane pane;
+    @FXML
+    private ImageView closeButton;
+    @FXML
+    private ImageView logOutButton;
+    @FXML
+    private TextField directory;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -43,7 +53,8 @@ public class FileManagement extends Application {
 
     @FXML
     private void closeWindow(MouseEvent event) {
-        System.exit(0);
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -61,12 +72,20 @@ public class FileManagement extends Application {
 
     @FXML
     private void selectFile(MouseEvent event) {
-        System.out.println("Hello");
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileToUpload = fileChooser.showOpenDialog(stage);
+        String link = fileToUpload.getAbsolutePath();
+        if (fileToUpload != null) {
+            directory.setText(link);
+        }
     }
 
 
     @FXML
-    private void upload(ActionEvent event) {
+    private void upload(MouseEvent event) {
+        System.out.println("pressed button");
         try {
             byte fileInBytes[];
             fileInBytes =
@@ -108,16 +127,20 @@ public class FileManagement extends Application {
     }
 
     @FXML
-    private void logOut(MouseEvent event) {
+    private void logOut(MouseEvent event) throws IOException {
         try {
-            client.sendMessage("001 " + FileManagement.username);
-            Platform.exit();
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource("GraphicalUserInterface.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+
+            Stage stageFM = (Stage) logOutButton.getScene().getWindow();
+            stageFM.close();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-    }
-
-    public static void main(String... args) {
-        Application.launch(FileManagement.class, args);
     }
 }

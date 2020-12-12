@@ -39,7 +39,7 @@
             <Font name="SansSerif Bold" size="10.0" />
          </font>
       </Text>
-      <Text fx:id="uploadButton" fill="#acbedd" layoutX="427.0" layoutY="151.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="UPLOAD" wrappingWidth="86.4501953125">
+      <Text fx:id="uploadButton" fill="#acbedd" layoutX="427.0" layoutY="151.0" onMouseClicked="#upload" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="UPLOAD" wrappingWidth="86.4501953125">
          <font>
             <Font size="15.0" />
          </font>
@@ -91,7 +91,7 @@
       </ImageView>
       <ScrollPane layoutX="14.0" layoutY="186.0" prefHeight="474.0" prefWidth="445.0" style="-fx-background-color: #1a1a1a;" stylesheets="@css/Design.css">
          <content>
-            <ListView prefHeight="474.0" prefWidth="448.0" style="-fx-background-color: #1a1a1a;" />
+            <ListView fx:id="fileList" prefHeight="474.0" prefWidth="448.0" style="-fx-background-color: #1a1a1a;" />
          </content>
       </ScrollPane>
    </children>

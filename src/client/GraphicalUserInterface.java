@@ -6,9 +6,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -26,6 +28,8 @@ public class GraphicalUserInterface extends Application {
     private TextField serverPortTextField;
     @FXML
     private TextField serverAddressTextField;
+    @FXML
+    private ImageView closeButton;
 
 
     @Override
@@ -38,7 +42,8 @@ public class GraphicalUserInterface extends Application {
 
     @FXML
     private void closeWindow(MouseEvent event) {
-        System.exit(0);
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -55,12 +60,20 @@ public class GraphicalUserInterface extends Application {
                     GraphicalUserInterface.username = usernameTextField.getText();
                     GraphicalUserInterface.serverPort = serverPortTextField.getText();
                     GraphicalUserInterface.serverAddress = serverAddressTextField.getText();
-                    new FileManagement().start(new Stage());
+                    FXMLLoader loader =
+                            new FXMLLoader(getClass().getResource("FileManagement.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.show();
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
             }
         });
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
     }
 
     public static void main(String args[]) {

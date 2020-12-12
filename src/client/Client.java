@@ -6,6 +6,12 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import lombok.Cleanup;
 
 public class Client {
@@ -13,6 +19,9 @@ public class Client {
     private int serverPort;
     private ClientDatagramSocket socket;
     private String lastMessage = "";
+
+    @FXML
+    private Button logInButton;
 
     public Client(String serverAddress, String serverPort)
             throws NumberFormatException, SocketException, UnknownHostException {
@@ -34,11 +43,23 @@ public class Client {
         return this.socket.receiveMessage();
     }
 
+
+    Alert a = new Alert(AlertType.NONE);
+    EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent e) {
+            a.setAlertType(AlertType.INFORMATION);
+            a.setContentText("Hello");
+            a.show();
+        }
+    };
+
     private void parse(String message) {
         var code = message.substring(0, 3);
         message = message.substring(3).trim();
         switch (code) {
             case "100":
+                // a.setContentText("Hello");
+                // logInButton.setOnAction(event);
                 JOptionPane.showMessageDialog(null, message);
                 break;
             case "101":
