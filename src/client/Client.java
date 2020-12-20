@@ -1,37 +1,28 @@
-package src.client;
+package client;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import javax.swing.JOptionPane;
-import lombok.Cleanup;
+import lombok.Getter;
 
 public class Client {
-    private InetAddress serverHost;
+    private InetAddress serverAddress;
     private int serverPort;
     private ClientDatagramSocket socket;
+
+    @Getter
     private String lastMessage = "";
 
-    public Client(String serverHost, String serverPort)
-            throws NumberFormatException, SocketException, UnknownHostException {
-        this.socket = new ClientDatagramSocket();
-        this.serverHost = InetAddress.getByName(serverHost);
+    public Client(String serverAddress, String serverPort)
+            throws SocketException, UnknownHostException {
+        socket = new ClientDatagramSocket();
+        this.serverAddress = InetAddress.getByName(serverAddress);
         this.serverPort = Integer.parseInt(serverPort);
     }
 
-    public String getLastMessage() {
-        return this.lastMessage;
-    }
-
-    private void closeSocket() {
-        this.socket.close();
-    }
-
-    private String getMessage(String message) throws IOException {
-        this.socket.sendMessage(this.serverHost, this.serverPort, message);
-        return this.socket.receiveMessage();
+    public void sendMessage(String message) throws IOException {
+        parse(getMessage(message));
     }
 
     private void parse(String message) {
@@ -39,41 +30,46 @@ public class Client {
         message = message.substring(3).trim();
         switch (code) {
             case "100":
-                JOptionPane.showMessageDialog(null, message);
+                GUI.alert.setContentText(message);
+                GUI.alert.showAndWait();
                 break;
             case "101":
-                JOptionPane.showMessageDialog(null, message);
-                this.closeSocket();
+                GUI.alert.setContentText(message);
+                GUI.alert.showAndWait();
+                closeSocket();
                 break;
             case "300":
-                this.lastMessage = message;
+                lastMessage = message;
                 break;
             case "301":
-                JOptionPane.showMessageDialog(null, message);
+                GUI.alert.setContentText(message);
+                GUI.alert.showAndWait();
                 break;
             case "302":
-                JOptionPane.showMessageDialog(null, "Your download is complete.");
-                this.lastMessage = message;
+                GUI.alert.setContentText(message);
+                GUI.alert.showAndWait();
+                lastMessage = message;
                 break;
             case "303":
-                this.lastMessage = message;
+                lastMessage = message;
+                break;
+            case "304":
+                GUI.alert.setContentText(message);
+                GUI.alert.showAndWait();
+                break;
+            case "305":
+                GUI.alert.setContentText(message);
+                GUI.alert.showAndWait();
                 break;
         }
     }
 
-    public void sendMessage(String message) throws IOException {
-        this.parse(getMessage(message));
+    private String getMessage(String message) throws IOException {
+        socket.sendMessage(message, serverAddress, serverPort);
+        return socket.getMessage();
     }
 
-    public byte[] fileToByteArray(String filePath, long fileSize) throws IOException {
-        byte byteArray[] = new byte[(int) fileSize];
-        @Cleanup
-        var fin = new FileInputStream(filePath);
-        var i = 0;
-        while (fin.available() != 0) {
-            byteArray[i] = (byte) fin.read();
-            ++i;
-        }
-        return byteArray;
+    private void closeSocket() {
+        socket.close();
     }
 }
