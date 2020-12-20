@@ -1,13 +1,15 @@
 package client;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.PlatformLoggingMXBean;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,8 +26,8 @@ import javafx.stage.StageStyle;
 import lombok.Cleanup;
 
 public class Helper extends GUI implements Initializable {
-    private ObservableList<String> observableList = FXCollections.observableArrayList();
     private File fileToUpload;
+    private ObservableList<String> observableList = FXCollections.observableArrayList();
 
     @FXML
     private TextField directory;
@@ -33,12 +35,37 @@ public class Helper extends GUI implements Initializable {
     @FXML
     private ListView<String> listView;
 
-    public void updateFileList() throws IOException {
-        GUI.client.sendMessage("201 ");
-        this.observableList.clear();
-        String[] files = GUI.client.getLastMessage().split(";");
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        ManagementFactory.getPlatformMXBean(PlatformLoggingMXBean.class)
+                .setLoggerLevel("javafx.css", "OFF");
+        try {
+            updateFileList();
+        } catch (IOException exception) {
+        }
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listView.setItems(observableList);
+    }
+
+    private void updateFileList() throws IOException {
+        client.sendMessage("201 ");
+        observableList.clear();
+        String[] files = client.getLastMessage().split(";");
         for (var i = 0; i < files.length; ++i)
-            this.observableList.add(files[i]);
+            observableList.add(files[i]);
+    }
+
+    private byte[] fileToByteArray(String filePath, long fileSize) throws IOException {
+        byte byteArray[] = new byte[(int) fileSize];
+
+        @Cleanup
+        var fin = new FileInputStream(filePath);
+        var i = 0;
+        while (fin.available() != 0) {
+            byteArray[i] = (byte) fin.read();
+            ++i;
+        }
+        return byteArray;
     }
 
     @FXML
@@ -49,78 +76,57 @@ public class Helper extends GUI implements Initializable {
     }
 
     @FXML
-    private void upload(MouseEvent event) {
-        try {
+    private void upload(MouseEvent event) throws IOException {
+        if (fileToUpload != null) {
             byte fileInBytes[];
-            fileInBytes =
-                    client.fileToByteArray(fileToUpload.getAbsolutePath(), fileToUpload.length());
+            fileInBytes = fileToByteArray(fileToUpload.getAbsolutePath(), fileToUpload.length());
             var fileContents = new String(fileInBytes);
             client.sendMessage("200 " + fileToUpload.getName());
             client.sendMessage("202 " + fileContents);
             updateFileList();
             directory.setText("");
-        } catch (IOException exception) {
-            exception.printStackTrace();
         }
     }
 
     @FXML
-    public void download(MouseEvent event) {
-        try {
-            var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
-            client.sendMessage("203 " + selectedFile);
-            var message = client.getLastMessage();
-            if (!message.equals("File does not exist!")) {
-                byte[] fileInBytes = client.getLastMessage().getBytes();
-                Files.createDirectories(Paths.get("C:\\Network\\Downloads\\"));
-                var newFile = new File("C:\\Network\\Downloads\\" + selectedFile);
-                newFile.createNewFile();
+    private void download(MouseEvent event) throws IOException {
+        var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
+        client.sendMessage("203 " + selectedFile);
+        var message = client.getLastMessage();
+        if (!message.equals("File does not exist!")) {
+            byte[] fileInBytes = client.getLastMessage().getBytes();
+            Files.createDirectories(Paths.get("C:\\Network\\Downloads\\"));
+            var newFile = new File("C:\\Network\\Downloads\\" + selectedFile);
+            newFile.createNewFile();
 
-                @Cleanup
-                var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
-                fout.write(fileInBytes);
-            } else
-                JOptionPane.showMessageDialog(null, message);
-            updateFileList();
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            @Cleanup
+            var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
+            fout.write(fileInBytes);
+        } else {
+            alert.setContentText(message);
+            alert.showAndWait();
         }
+        updateFileList();
     }
 
     @FXML
-    private void delete(MouseEvent event) {
-        try {
-            var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
-            client.sendMessage("204 " + selectedFile);
-            var message = client.getLastMessage();
-            if (message.equals("File does not exist!"))
-                JOptionPane.showMessageDialog(null, message);
-            updateFileList();
-        } catch (IOException exception) {
-            exception.printStackTrace();
+    private void delete(MouseEvent event) throws IOException {
+        var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
+        client.sendMessage("204 " + selectedFile);
+        var message = client.getLastMessage();
+        if (message.equals("File does not exist!")) {
+            alert.setContentText(message);
+            alert.showAndWait();
         }
+        updateFileList();
     }
 
     @FXML
     private void logOut(MouseEvent event) throws IOException {
-        try {
-            Stage stage = new Stage(StageStyle.UNDECORATED);
-            stage.setScene(new Scene(new FXMLLoader(getClass().getResource("GUI.fxml")).load()));
-            stage.show();
-            ((Stage) closeButton.getScene().getWindow()).close();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        try {
-            updateFileList();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        listView.setItems(observableList);
+        client.sendMessage("001 " + username);
+        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("GUI.fxml")).load()));
+        stage.show();
+        ((Stage) closeButton.getScene().getWindow()).close();
     }
 }

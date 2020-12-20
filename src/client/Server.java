@@ -1,11 +1,10 @@
-package server;
+package client;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketException;
 import lombok.Cleanup;
 import lombok.Setter;
 
@@ -17,7 +16,7 @@ public class Server {
     @Setter
     private static String filename;
 
-    public static void main(String args[]) throws SocketException, IOException {
+    public static void main(String args[]) throws IOException {
         socket = new ServerDatagramSocket(serverPort);
         socket.connect(new InetSocketAddress("www.google.com", 80));
         System.out.println("Server Address: " + socket.getLocalAddress().getHostAddress());
@@ -73,7 +72,7 @@ public class Server {
         username = null;
     }
 
-    private static void listFiles() throws IOException {
+    private static void listFiles() {
         var userDirectory = new File("C:\\Network\\" + username);
         File[] listOfFiles = userDirectory.listFiles();
         var sb = new StringBuilder();
@@ -121,15 +120,14 @@ public class Server {
             returnMessage = "303 File does not exist!";
     }
 
-    private static void delete(String message) throws IOException {
+    private static void delete(String message) {
         var f = new File("C:\\Network\\" + username + "\\" + message);
-        if (f.isFile()) {
+        if (f.isFile())
             if (f.delete())
                 returnMessage = "304 File is deleted!";
             else
                 returnMessage = "305 Cannot delete file!";
-
-        } else
+        else
             returnMessage = "303 File does not exist!";
     }
 }
