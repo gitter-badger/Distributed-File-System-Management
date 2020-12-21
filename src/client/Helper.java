@@ -102,6 +102,8 @@ public class Helper extends GUI implements Initializable {
             @Cleanup
             var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
             fout.write(fileInBytes);
+            alert.setContentText("Your download is complete.");
+            alert.showAndWait();
         } else {
             alert.setContentText(message);
             alert.showAndWait();

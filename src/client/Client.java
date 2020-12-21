@@ -46,8 +46,6 @@ public class Client {
                 GUI.alert.showAndWait();
                 break;
             case "302":
-                GUI.alert.setContentText(message);
-                GUI.alert.showAndWait();
                 lastMessage = message;
                 break;
             case "303":
