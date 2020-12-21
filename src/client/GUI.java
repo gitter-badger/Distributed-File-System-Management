@@ -58,6 +58,7 @@ public class GUI extends Application {
 
     private static void startServer() {
         (new Thread() {
+
             @Override
             public void run() {
                 try {
