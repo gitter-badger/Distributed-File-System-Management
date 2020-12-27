@@ -66,7 +66,7 @@
          <font>
             <Font size="13.0" />
          </font></TextField>
-      <TextField fx:id="serverPortTextField" layoutX="81.0" layoutY="229.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" styleClass="textField" stylesheets="@css/Design.css" text="3">
+      <TextField fx:id="serverPortTextField" layoutX="81.0" layoutY="229.0" prefHeight="30.0" prefWidth="301.0" promptText="Server Port" style="-fx-background-color: #222222;" styleClass="textField" stylesheets="@css/Design.css" text="1024">
          <font>
             <Font size="13.0" />
          </font></TextField>

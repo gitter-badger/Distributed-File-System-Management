@@ -9,7 +9,7 @@ import lombok.Cleanup;
 import lombok.Setter;
 
 public class Server {
-    private static final int serverPort = 3;
+    private static final int serverPort = 1024;
     private static ServerDatagramSocket socket;
     private static String returnMessage, username;
 
