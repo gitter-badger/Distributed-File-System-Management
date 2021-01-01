@@ -44,7 +44,7 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fill="#acbedd" layoutX="496.0" layoutY="418.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="DOWNLOAD">
+      <Text fill="#acbedd" layoutX="496.0" layoutY="453.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="DOWNLOAD">
          <font>
             <Font size="14.0" />
          </font>
@@ -79,7 +79,7 @@
             <Image url="@img/Loupe.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="downloadButton" fitHeight="60.0" fitWidth="60.0" layoutX="506.0" layoutY="336.0" onMouseClicked="#download" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="downloadButton" fitHeight="60.0" fitWidth="60.0" layoutX="506.0" layoutY="371.0" onMouseClicked="#download" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Download.png" />
          </image>
@@ -91,8 +91,18 @@
       </ImageView>
       <ScrollPane layoutX="14.0" layoutY="186.0" prefHeight="474.0" prefWidth="445.0" style="-fx-background-color: #1a1a1a;" stylesheets="@css/Design.css">
          <content>
-            <ListView fx:id="listView" prefHeight="474.0" prefWidth="448.0" style="-fx-background-color: #1a1a1a;" />
+            <ListView fx:id="listView" prefHeight="474.0" prefWidth="448.0" style="-fx-background-color: #121000;" />
          </content>
       </ScrollPane>
+      <ImageView fx:id="previewFileButton" fitHeight="70.0" fitWidth="60.0" layoutX="506.0" layoutY="216.0" onMouseClicked="#download" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/preview.png" />
+         </image>
+      </ImageView>
+      <Text fill="#acbedd" layoutX="506.0" layoutY="299.0" opacity="0.71" strokeType="OUTSIDE" strokeWidth="0.0" text="PREVIEW">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
