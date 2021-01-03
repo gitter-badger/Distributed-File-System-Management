@@ -50,9 +50,11 @@ public class Server {
                 upload(message);
                 break;
             case "203":
+                preview(message);
+            case "204":
                 download(message);
                 break;
-            case "204":
+            case "205":
                 delete(message);
                 break;
         }
@@ -109,6 +111,15 @@ public class Server {
             ++i;
         }
         return byteArray;
+    }
+
+    private static void preview(String message) throws IOException {
+        var f = new File("C:\\Network\\" + username + "\\" + message);
+        if (f.isFile()) {
+            byte[] fileInBytes = fileToByteArray(f.getAbsolutePath(), f.length());
+            returnMessage = "302 " + new String(fileInBytes);
+        } else
+            returnMessage = "303 File does not exist!";
     }
 
     private static void download(String message) throws IOException {

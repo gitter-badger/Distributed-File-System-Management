@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -73,6 +74,32 @@ public class Helper extends GUI implements Initializable {
         fileToUpload = new FileChooser().showOpenDialog(closeButton.getScene().getWindow());
         if (fileToUpload != null)
             directory.setText(fileToUpload.getAbsolutePath());
+    }
+
+    @FXML
+    private void preview(MouseEvent event) throws IOException {
+        var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
+        client.sendMessage("203 " + selectedFile);
+        var message = client.getLastMessage();
+        if (!message.equals("File does not exist!")) {
+            byte[] fileInBytes = client.getLastMessage().getBytes();
+            Files.createDirectories(Paths.get("C:\\Network\\Downloads\\"));
+            var newFile = new File("C:\\Network\\Downloads\\" + selectedFile);
+            newFile.createNewFile();
+
+            @Cleanup
+            var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
+            fout.write(fileInBytes);
+            if (Desktop.isDesktopSupported())
+                if (newFile.exists()) {
+                    Desktop.getDesktop().open(newFile);
+                    newFile.delete();
+                }
+        } else {
+            alert.setContentText(message);
+            alert.showAndWait();
+        }
+        updateFileList();
     }
 
     @FXML
