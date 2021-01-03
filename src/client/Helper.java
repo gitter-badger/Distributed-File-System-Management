@@ -83,18 +83,15 @@ public class Helper extends GUI implements Initializable {
         var message = client.getLastMessage();
         if (!message.equals("File does not exist!")) {
             byte[] fileInBytes = client.getLastMessage().getBytes();
-            Files.createDirectories(Paths.get("C:\\Network\\Downloads\\"));
-            var newFile = new File("C:\\Network\\Downloads\\" + selectedFile);
+            Files.createDirectories(Paths.get("C:\\Network\\Downloads\\Cache\\"));
+            var newFile = new File("C:\\Network\\Downloads\\Cache\\" + selectedFile);
             newFile.createNewFile();
 
             @Cleanup
-            var fout = new FileOutputStream("C:\\Network\\Downloads\\" + selectedFile);
+            var fout = new FileOutputStream("C:\\Network\\Downloads\\Cache\\" + selectedFile);
             fout.write(fileInBytes);
-            if (Desktop.isDesktopSupported())
-                if (newFile.exists()) {
-                    Desktop.getDesktop().open(newFile);
-                    newFile.delete();
-                }
+            Desktop.getDesktop().open(newFile);
+            newFile.deleteOnExit();
         } else {
             alert.setContentText(message);
             alert.showAndWait();

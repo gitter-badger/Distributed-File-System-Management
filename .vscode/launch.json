@@ -4,7 +4,7 @@
         {
             "type": "java",
             "name": "Java",
-            "vmArgs": "-p ./lib/javafx-sdk-15.0.1/lib --add-modules javafx.controls,javafx.fxml -Dprism.verbose=true -Djdk.gtk.verbose=true",
+            "vmArgs": "-p ./lib/javafx-sdk-15.0.1/lib --add-modules javafx.controls,javafx.fxml",
             "request": "launch",
             "mainClass": "${file}"
         }
