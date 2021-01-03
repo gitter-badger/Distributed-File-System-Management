@@ -9,7 +9,8 @@ import java.net.SocketException;
 import lombok.Cleanup;
 import lombok.Setter;
 
-public class Server {
+public final class Server {
+    private static volatile Server instance;
     private static final int serverPort = 1024;
     private static ServerDatagramSocket socket;
     private static String returnMessage, username;
@@ -17,7 +18,7 @@ public class Server {
     @Setter
     private static String filename;
 
-    public static void main(String args[]) throws SocketException, IOException {
+    private Server() throws SocketException, IOException {
         socket = new ServerDatagramSocket(serverPort);
         socket.connect(new InetSocketAddress("www.google.com", 80));
         System.out.println("Server Address: " + socket.getLocalAddress().getHostAddress());
@@ -28,6 +29,17 @@ public class Server {
             DatagramInfomation request = socket.receiveDatagramInfomation();
             parse(request.getMessage());
             socket.sendMessage(request.getAddress(), request.getPort(), returnMessage);
+        }
+    }
+
+    public static Server getInstance() throws SocketException, IOException {
+        Server result = instance;
+        if (result != null)
+            return result;
+        synchronized (Server.class) {
+            if (instance == null)
+                instance = new Server();
+            return instance;
         }
     }
 
@@ -51,9 +63,11 @@ public class Server {
                 upload(message);
                 break;
             case "203":
+                preview(message);
+            case "204":
                 download(message);
                 break;
-            case "204":
+            case "205":
                 delete(message);
                 break;
         }
@@ -73,7 +87,7 @@ public class Server {
         username = null;
     }
 
-    private static void listFiles() throws IOException {
+    private static void listFiles() {
         var userDirectory = new File("C:\\Network\\" + username);
         File[] listOfFiles = userDirectory.listFiles();
         var sb = new StringBuilder();
@@ -112,6 +126,15 @@ public class Server {
         return byteArray;
     }
 
+    private static void preview(String message) throws IOException {
+        var f = new File("C:\\Network\\" + username + "\\" + message);
+        if (f.isFile()) {
+            byte[] fileInBytes = fileToByteArray(f.getAbsolutePath(), f.length());
+            returnMessage = "302 " + new String(fileInBytes);
+        } else
+            returnMessage = "303 File does not exist!";
+    }
+
     private static void download(String message) throws IOException {
         var f = new File("C:\\Network\\" + username + "\\" + message);
         if (f.isFile()) {
@@ -121,15 +144,14 @@ public class Server {
             returnMessage = "303 File does not exist!";
     }
 
-    private static void delete(String message) throws IOException {
+    private static void delete(String message) {
         var f = new File("C:\\Network\\" + username + "\\" + message);
-        if (f.isFile()) {
+        if (f.isFile())
             if (f.delete())
                 returnMessage = "304 File is deleted!";
             else
                 returnMessage = "305 Cannot delete file!";
-
-        } else
+        else
             returnMessage = "303 File does not exist!";
     }
 }
