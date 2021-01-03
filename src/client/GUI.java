@@ -1,8 +1,10 @@
 package client;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.PlatformLoggingMXBean;
+import org.apache.commons.io.FileUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,7 +60,7 @@ public class GUI extends Application {
             @Override
             public void run() {
                 try {
-                    Server.main(null);
+                    Server.getInstance();
                 } catch (IOException exception) {
                 }
             }
@@ -66,7 +68,8 @@ public class GUI extends Application {
     }
 
     @FXML
-    protected void closeWindow(MouseEvent event) {
+    protected void closeWindow(MouseEvent event) throws IOException {
+        FileUtils.deleteDirectory(new File("C:\\Network\\Downloads\\Cache"));
         System.exit(0);
     }
 

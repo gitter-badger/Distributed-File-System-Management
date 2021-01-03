@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 import lombok.Cleanup;
 import lombok.Setter;
 
-public class Server {
+public final class Server {
+    private static volatile Server instance;
     private static final int serverPort = 1024;
     private static ServerDatagramSocket socket;
     private static String returnMessage, username;
@@ -16,7 +18,7 @@ public class Server {
     @Setter
     private static String filename;
 
-    public static void main(String args[]) throws IOException {
+    private Server() throws SocketException, IOException {
         socket = new ServerDatagramSocket(serverPort);
         socket.connect(new InetSocketAddress("www.google.com", 80));
         System.out.println("Server Address: " + socket.getLocalAddress().getHostAddress());
@@ -27,6 +29,17 @@ public class Server {
             DatagramInfomation request = socket.receiveDatagramInfomation();
             parse(request.getMessage());
             socket.sendMessage(request.getAddress(), request.getPort(), returnMessage);
+        }
+    }
+
+    public static Server getInstance() throws SocketException, IOException {
+        Server result = instance;
+        if (result != null)
+            return result;
+        synchronized (Server.class) {
+            if (instance == null)
+                instance = new Server();
+            return instance;
         }
     }
 

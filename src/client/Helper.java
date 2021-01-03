@@ -11,6 +11,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import org.apache.commons.io.FileUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -91,7 +92,6 @@ public class Helper extends GUI implements Initializable {
             var fout = new FileOutputStream("C:\\Network\\Downloads\\Cache\\" + selectedFile);
             fout.write(fileInBytes);
             Desktop.getDesktop().open(newFile);
-            newFile.deleteOnExit();
         } else {
             alert.setContentText(message);
             alert.showAndWait();
@@ -115,7 +115,7 @@ public class Helper extends GUI implements Initializable {
     @FXML
     private void download(MouseEvent event) throws IOException {
         var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
-        client.sendMessage("203 " + selectedFile);
+        client.sendMessage("204 " + selectedFile);
         var message = client.getLastMessage();
         if (!message.equals("File does not exist!")) {
             byte[] fileInBytes = client.getLastMessage().getBytes();
@@ -138,7 +138,7 @@ public class Helper extends GUI implements Initializable {
     @FXML
     private void delete(MouseEvent event) throws IOException {
         var selectedFile = (String) listView.getSelectionModel().getSelectedItem();
-        client.sendMessage("204 " + selectedFile);
+        client.sendMessage("205 " + selectedFile);
         var message = client.getLastMessage();
         if (message.equals("File does not exist!")) {
             alert.setContentText(message);
@@ -154,5 +154,6 @@ public class Helper extends GUI implements Initializable {
         stage.setScene(new Scene(new FXMLLoader(getClass().getResource("GUI.fxml")).load()));
         stage.show();
         ((Stage) closeButton.getScene().getWindow()).close();
+        FileUtils.deleteDirectory(new File("C:\\Network\\Downloads\\Cache"));
     }
 }
